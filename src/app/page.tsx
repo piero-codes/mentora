@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { mockBooks } from "@/data/mockData";
@@ -7,8 +9,19 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "@/components/ui/tooltip";
+import { useState } from "react";
 
 export default function Home() {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredBooks = mockBooks.filter((book) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      book.title.toLowerCase().includes(searchLower) ||
+      book.author.toLowerCase().includes(searchLower)
+    );
+  });
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
@@ -23,10 +36,14 @@ export default function Home() {
         </Button>
       </div>
       <div className="mb-6 max-w-md">
-        <Input placeholder="Search books by title or author..." />
+        <Input
+          placeholder="Search books by title or author..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {mockBooks.map((book) => (
+        {filteredBooks.map((book) => (
           <div key={book.id} className="flex flex-col">
             <Image
               src={"/book-cover.png"}

@@ -1,7 +1,6 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { mockBooks } from "@/data/mockData";
 import Image from "next/image";
 import {
@@ -10,6 +9,7 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 import { useState } from "react";
+import { AddBookDialog } from "@/components/AddBookDialog";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -31,9 +31,7 @@ export default function Home() {
             Discover and revisit your reading highlights
           </p>
         </div>
-        <Button className="bg-black text-white hover:bg-neutral-800 cursor-pointer">
-          + Add Book
-        </Button>
+        <AddBookDialog />
       </div>
       <div className="mb-6 max-w-md">
         <Input
